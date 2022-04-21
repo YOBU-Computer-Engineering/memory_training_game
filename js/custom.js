@@ -9,11 +9,16 @@ $(document).ready(function () {
         $("button").not(".ekleBtn").click(function (e) { 
             e.preventDefault();//form nesnesi için kullanılıyor
             $(this).parent().parent().find(".adi").css("background-color","white");
-        });
+        }); 
         
+        $("table").on("click", "button:not(#ekleBtn)", function (e) { 
+            var icerik = $(this).parent().parent().find(".adi").text();
+            mesajGonder(icerik);
+        }); 
+
         $(".ekleBtn").click(function (e) {
-            $('table').append('<tr><td class="adi">'+icerik+'</td><td><button class="silBtn">Sil</button></td></tr>');
-        });
+            $('table').append('<tr><td class="adi">Engin</td><td>Karataş</td><td>055113003300</td><td>Koca🖖i</td><td><button>Aksiyon</button></td></tr>');});
+
     });
 
 
