@@ -1,24 +1,49 @@
 $(document).ready(function () {
-    $("#test").attr('src', `http://127.0.0.1:5500/images/armut.png`)
-    $("#divi").append("<p>Hello World</p>");
+  $("#test").attr("src", `http://127.0.0.1:5500/images/armut.png`);
+  $("#divi").append("<p>Hello World</p>");
 
   let cardArray = []; // kartları tutacak array
-  let imageName = ["elma", "armut","visne","erik","karpuz","domates","elma", "armut","visne","erik","karpuz","domates"]; // kart resimlerini tutacak array
+  let imageName = [
+    "elma",
+    "armut",
+    "visne",
+    "erik",
+    "karpuz",
+    "domates",
+    "elma",
+    "armut",
+    "visne",
+    "erik",
+    "karpuz",
+    "domates",
+  ]; // kart resimlerini tutacak array
 
   shuffle(imageName); //geçerli arrayi kartları karıştıralım
-  initilizeCardArrays(); // kartların modelini oluşturuyoruz  
+  initilizeCardArrays(); // kartların modelini oluşturuyoruz
   initalizeCardValues(); // kartların değerlerini oluşturuyoruz
   initalizeCardAttributes(); // kartlara tıklandığındaki click eventi ile tıklanılan kartı gösteriyoruz
 
   function initalizeCardValues() {
-     for (let i = 0; i < cardArray.length; i++) {
+    for (let i = 0; i < cardArray.length; i++) {
       let tableMatrixNumber = cardArray[i].number;
-      let tableMatrixNumberDivImage = $("#tableMatrixNumber" + tableMatrixNumber).find("img");
-      tableMatrixNumberDivImage.attr('src', `http://127.0.0.1:5500/images/${imageName[i]}.png`);
+      let tableMatrixNumberDivImage = $(
+        "#tableMatrixNumber" + tableMatrixNumber
+      ).find("img");
+      tableMatrixNumberDivImage;
 
-      let tableMatrixNumberDiv = $("#tableMatrixNumber" + tableMatrixNumber).find("h1");
+      tableMatrixNumberDivImage.attr(
+        "src",
+        `http://127.0.0.1:5500/images/${imageName[i]}.png`
+      );
+      tableMatrixNumberDivImage.attr("alt", imageName[i]);
+      tableMatrixNumberDivImage.attr("id", imageName[i]);
+
+      let tableMatrixNumberDiv = $(
+        "#tableMatrixNumber" + tableMatrixNumber
+      ).find("h1");
       tableMatrixNumberDiv.append(tableMatrixNumber);
-      
+
+      tableMatrixNumberDiv.attr("id", imageName[i]);
     }
   }
 
@@ -89,7 +114,24 @@ $(document).ready(function () {
       );
     });
   });
- 
+
+  let thisCardImageID = "";
+  let counter = 0;
+  let doubleChoice = false;
+  $(this).click(function (e) {
+    if (doubleChoice == false) {
+      thisCardImageID = e.target.id;
+      doubleChoice = true;
+    } else {
+      if (thisCardImageID == e.target.id) {
+        console.log("same");
+        doubleChoice = false;
+      } else {
+        console.log("diffrent");
+        doubleChoice = false;
+      }
+    }
+  });
 });
 
 function mesajGonder(deger) {
