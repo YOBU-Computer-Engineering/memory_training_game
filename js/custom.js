@@ -1,20 +1,24 @@
 $(document).ready(function () {
-  let cardArray = []; // kartları tutacak array
-  let cardPairsArray = [1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6]; // kartları tutacak array
+    $("#test").attr('src', `http://127.0.0.1:5500/images/armut.png`)
+    $("#divi").append("<p>Hello World</p>");
 
-  shuffle(cardPairsArray);
-  initilizeCardArrays();
-  initalizeCardValues();
-  initalizeCardAttributes();
+  let cardArray = []; // kartları tutacak array
+  let imageName = ["elma", "armut","visne","erik","karpuz","domates","elma", "armut","visne","erik","karpuz","domates"]; // kart resimlerini tutacak array
+
+  shuffle(imageName); //geçerli arrayi kartları karıştıralım
+  initilizeCardArrays(); // kartların modelini oluşturuyoruz  
+  initalizeCardValues(); // kartların değerlerini oluşturuyoruz
+  initalizeCardAttributes(); // kartlara tıklandığındaki click eventi ile tıklanılan kartı gösteriyoruz
 
   function initalizeCardValues() {
-      console.log(cardPairsArray);
-    for (let i = 0; i < cardArray.length; i++) {
-
+     for (let i = 0; i < cardArray.length; i++) {
       let tableMatrixNumber = cardArray[i].number;
+      let tableMatrixNumberDivImage = $("#tableMatrixNumber" + tableMatrixNumber).find("img");
+      tableMatrixNumberDivImage.attr('src', `http://127.0.0.1:5500/images/${imageName[i]}.png`);
+
       let tableMatrixNumberDiv = $("#tableMatrixNumber" + tableMatrixNumber).find("h1");
-      console.log("🚀 ~ file: custom.js ~ line 15 ~ initalizeCardValues ~ tableMatrixNumberDiv", tableMatrixNumberDiv)
-      tableMatrixNumberDiv.append(`<span>${cardPairsArray[i]}</span>`);
+      tableMatrixNumberDiv.append(tableMatrixNumber);
+      
     }
   }
 
@@ -85,12 +89,7 @@ $(document).ready(function () {
       );
     });
   });
-
-  // $(".name2z").hide();
-  // $("h1").click(function (e) {
-  //     e.preventDefault();
-  //     $("h1").css("color", "red");
-  // })
+ 
 });
 
 function mesajGonder(deger) {
