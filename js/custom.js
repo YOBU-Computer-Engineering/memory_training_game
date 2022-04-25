@@ -1,4 +1,36 @@
 $(document).ready(function () {
+    let cardArray = [];
+
+    
+
+    initilizeCardArrays();
+    initalizeCardAttributes();
+
+    function initilizeCardArrays() {
+        for (let i = 1; i <= 12; i++) {
+            cardArray.push({
+                name: "",
+                number: i,
+                imagePath: ""
+            });
+        } 
+    }
+
+    function initalizeCardAttributes(params) {
+        for (let i = 0; i < cardArray.length; i++) {
+            let tableMatrixNumber = cardArray[i].number;
+            let tableMatrixNumberDiv = $('#tableMatrixNumber' + tableMatrixNumber);
+            tableMatrixNumberDiv.click(function () {
+                let tableMatrixNumberDiv = $('#tableMatrixNumber' + tableMatrixNumber);
+                tableMatrixNumberDiv.css('background-color', '#ff0000');
+                mesajGonder(tableMatrixNumber);
+            });
+        }
+    }
+
+
+    
+
     $("button").click(function (e) { 
         e.preventDefault();//form nesnesi için kullanılıyor
         
