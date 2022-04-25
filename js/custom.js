@@ -2,6 +2,13 @@ $(document).ready(function () {
   $("#test").attr("src", `http://127.0.0.1:5500/images/armut.png`);
   $("#divi").append("<p>Hello World</p>");
 
+  $("img").parent().css("visibility", "hidden");
+  $(".col-lg-3").css({
+    "border-color": "#C1E0FF",
+    "border-width": "1px",
+    "border-style": "solid",
+  });
+
   let cardArray = []; // kartları tutacak array
   let imageName = [
     "elma",
@@ -23,30 +30,6 @@ $(document).ready(function () {
   initalizeCardValues(); // kartların değerlerini oluşturuyoruz
   initalizeCardAttributes(); // kartlara tıklandığındaki click eventi ile tıklanılan kartı gösteriyoruz
 
-  function initalizeCardValues() {
-    for (let i = 0; i < cardArray.length; i++) {
-      let tableMatrixNumber = cardArray[i].number;
-      let tableMatrixNumberDivImage = $(
-        "#tableMatrixNumber" + tableMatrixNumber
-      ).find("img");
-      tableMatrixNumberDivImage;
-
-      tableMatrixNumberDivImage.attr(
-        "src",
-        `http://127.0.0.1:5500/images/${imageName[i]}.png`
-      );
-      tableMatrixNumberDivImage.attr("alt", imageName[i]);
-      tableMatrixNumberDivImage.attr("id", imageName[i]);
-
-      let tableMatrixNumberDiv = $(
-        "#tableMatrixNumber" + tableMatrixNumber
-      ).find("h1");
-      tableMatrixNumberDiv.append(tableMatrixNumber);
-
-      tableMatrixNumberDiv.attr("id", imageName[i]);
-    }
-  }
-
   function initilizeCardArrays() {
     for (let i = 1; i <= 12; i++) {
       cardArray.push({
@@ -63,7 +46,6 @@ $(document).ready(function () {
       let tableMatrixNumberDiv = $("#tableMatrixNumber" + tableMatrixNumber);
       tableMatrixNumberDiv.click(function () {
         let tableMatrixNumberDiv = $("#tableMatrixNumber" + tableMatrixNumber);
-        tableMatrixNumberDiv.css("background-color", "#ff0000");
         mesajGonder(tableMatrixNumber);
       });
     }
@@ -92,7 +74,6 @@ $(document).ready(function () {
   $("button").click(function (e) {
     e.preventDefault(); //form nesnesi için kullanılıyor
 
-    $(this).parent().parent().find(".adi").css("background-color", "red");
     var icerik = $(this).parent().parent().find(".adi").text();
     mesajGonder(icerik);
 
@@ -100,7 +81,6 @@ $(document).ready(function () {
       .not(".ekleBtn")
       .click(function (e) {
         e.preventDefault(); //form nesnesi için kullanılıyor
-        $(this).parent().parent().find(".adi").css("background-color", "white");
       });
 
     $("table").on("click", "button:not(#ekleBtn)", function (e) {
@@ -115,10 +95,43 @@ $(document).ready(function () {
     });
   });
 
+  function initalizeCardValues() {
+    for (let i = 0; i < cardArray.length; i++) {
+      let tableMatrixNumber = cardArray[i].number;
+      let tableMatrixNumberDivImage = $(
+        "#tableMatrixNumber" + tableMatrixNumber
+      ).find("img");
+      tableMatrixNumberDivImage;
+
+      tableMatrixNumberDivImage.attr(
+        "src",
+        `http://127.0.0.1:5500/images/${imageName[i]}.png`
+      );
+      tableMatrixNumberDivImage.attr("alt", imageName[i]);
+      tableMatrixNumberDivImage.attr("id", imageName[i]);
+      tableMatrixNumberDivImage.attr("class", imageName[i]);
+      tableMatrixNumberDivImage.attr("data", imageName[i]);
+      tableMatrixNumberDivImage.addClass("resim");
+
+      let tableMatrixNumberDiv = $(
+        "#tableMatrixNumber" + tableMatrixNumber
+      ).find("h1");
+      tableMatrixNumberDiv.append(tableMatrixNumber);
+    }
+  }
+
   let thisCardImageID = "";
   let counter = 0;
   let doubleChoice = false;
+
   $(this).click(function (e) {
+    e.target.id = $("#" + e.target.id).find("img").attr("id");
+    console.log(e.target.id)
+    let card = $("#" + e.target.id)
+      .find(":last-child")
+      .css("visibility", "visible");
+    card.css("visibility", "visible");
+
     if (doubleChoice == false) {
       thisCardImageID = e.target.id;
       doubleChoice = true;
@@ -126,8 +139,18 @@ $(document).ready(function () {
       if (thisCardImageID == e.target.id) {
         console.log("same");
         doubleChoice = false;
+        $("#" + thisCardImageID)
+          .find(":last-child")
+          .css("visibility", "visible");
+        card.css("visibility", "visible");
       } else {
         console.log("diffrent");
+        setTimeout(() => {
+          $("#" + thisCardImageID)
+            .find(":last-child")
+            .css("visibility", "hidden");
+          card.css("visibility", "hidden");
+        }, 1000);
         doubleChoice = false;
       }
     }
@@ -135,5 +158,5 @@ $(document).ready(function () {
 });
 
 function mesajGonder(deger) {
-  alert(deger);
+  //   console.log(deger);
 }
