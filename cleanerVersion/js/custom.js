@@ -48,7 +48,7 @@ $(document).ready(function () {
         .find("img")
         .attr(
           "src",
-          `http://127.0.0.1:5500/esra/images/${resimler[i - 1]}.png`
+          `http://127.0.0.1:5500/cleanerVersion/images/${resimler[i - 1]}.png`
         );
       $("#kutu" + i)
         .find("img")
