@@ -1,0 +1,15 @@
+a{
+    color: red;
+}
+
+a[target=_blank] {
+    color: blue;
+}
+
+button{
+    background-color: blue;
+}
+
+.ekleBtn{
+    background-color: green;
+}
