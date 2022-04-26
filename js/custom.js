@@ -28,7 +28,6 @@ $(document).ready(function () {
   shuffle(imageName); //geçerli arrayi kartları karıştıralım
   initilizeCardArrays(); // kartların modelini oluşturuyoruz
   initalizeCardValues(); // kartların değerlerini oluşturuyoruz
-  initalizeCardAttributes(); // kartlara tıklandığındaki click eventi ile tıklanılan kartı gösteriyoruz
 
   function initilizeCardArrays() {
     for (let i = 1; i <= 12; i++) {
@@ -36,17 +35,6 @@ $(document).ready(function () {
         name: "",
         number: i,
         imagePath: "",
-      });
-    }
-  }
-
-  function initalizeCardAttributes() {
-    for (let i = 0; i < cardArray.length; i++) {
-      let tableMatrixNumber = cardArray[i].number;
-      let tableMatrixNumberDiv = $("#tableMatrixNumber" + tableMatrixNumber);
-      tableMatrixNumberDiv.click(function () {
-        let tableMatrixNumberDiv = $("#tableMatrixNumber" + tableMatrixNumber);
-        mesajGonder(tableMatrixNumber);
       });
     }
   }
@@ -97,11 +85,10 @@ $(document).ready(function () {
 
   function initalizeCardValues() {
     for (let i = 0; i < cardArray.length; i++) {
-      let tableMatrixNumber = cardArray[i].number;
+      let tableMatrixNumber = cardArray[i].number; // 1 2 3 4 5 6 7 8 9 10 11 12
       let tableMatrixNumberDivImage = $(
         "#tableMatrixNumber" + tableMatrixNumber
       ).find("img");
-      tableMatrixNumberDivImage;
 
       tableMatrixNumberDivImage.attr(
         "src",
@@ -111,7 +98,6 @@ $(document).ready(function () {
       tableMatrixNumberDivImage.attr("id", imageName[i]);
       tableMatrixNumberDivImage.attr("class", imageName[i]);
       tableMatrixNumberDivImage.attr("data", imageName[i]);
-      tableMatrixNumberDivImage.addClass("resim");
 
       let tableMatrixNumberDiv = $(
         "#tableMatrixNumber" + tableMatrixNumber
@@ -120,43 +106,38 @@ $(document).ready(function () {
     }
   }
 
-  let thisCardImageID = "";
-  let counter = 0;
-  let doubleChoice = false;
-
+  let prevImageObject = "";
+  let doubleClick = false;
+  let prev = "";
   $(this).click(function (e) {
-    e.target.id = $("#" + e.target.id).find("img").attr("id");
-    console.log(e.target.id)
-    let card = $("#" + e.target.id)
-      .find(":last-child")
-      .css("visibility", "visible");
-    card.css("visibility", "visible");
+    let thisImage = $("#" + e.target.id).find("img");
+    let thisImageClass = thisImage.attr("class");
+    let images = document.getElementsByClassName(thisImageClass);
+    // images[0].style.visibility = 'visible';
+    console.log(images[0]); //ilk
+    console.log(images[1]); //2.
 
-    if (doubleChoice == false) {
-      thisCardImageID = e.target.id;
-      doubleChoice = true;
+    if (doubleClick == false) {
+      prevImageObject = images[0];
+      thisImage.css("visibility", "visible");
+      prev = thisImage;
+      doubleClick = true;
     } else {
-      if (thisCardImageID == e.target.id) {
-        console.log("same");
-        doubleChoice = false;
-        $("#" + thisCardImageID)
-          .find(":last-child")
-          .css("visibility", "visible");
-        card.css("visibility", "visible");
+      doubleClick = false;
+      if (prevImageObject == images[0]) {
+        images[0].style.visibility = "visible";
+        images[1].style.visibility = "visible";
       } else {
-        console.log("diffrent");
+        thisImage.css("visibility", "visible");
         setTimeout(() => {
-          $("#" + thisCardImageID)
-            .find(":last-child")
-            .css("visibility", "hidden");
-          card.css("visibility", "hidden");
+          thisImage.css("visibility", "hidden");
+          prev.css("visibility", "hidden");
         }, 1000);
-        doubleChoice = false;
       }
     }
   });
 });
 
 function mesajGonder(deger) {
-  //   console.log(deger);
+  console.log(deger);
 }
