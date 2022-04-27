@@ -10,11 +10,31 @@
     <title>Merhaba</title>
     <link rel="stylesheet" href="./css/bootstrap.min.css" />
     <link rel="stylesheet" href="css/custom.css" />
+    <script src="//cdn.jsdelivr.net/npm/pouchdb@7.2.1/dist/pouchdb.min.js"></script>
+
   </head>
   <body>
     <!--4x4 table-->
     <div class="row" style="margin: 0px">
       <div class="col" style="margin: 51px">
+        <div class="row">
+          <div class="d-flex justify-content-center">Your Score:</div>
+          <div class="d-flex justify-content-center" id="score">0</div>
+          <div class="d-flex justify-content-end" id="username"></div>
+          <span id="timer">Timer: 0</span>
+          <div class="d-flex justify-content-start" id="allusers">
+            <br>
+            <table border="1">
+              <tr>
+                <td>LEADERBOARD(In Process)</td>
+              </tr>
+              <span ></span>
+            </table>
+            
+            <br>
+          </div>
+
+          </div>
         <div class="container">
           <div class="row">
             <div class="col-lg-3 align-self-center" id="tableMatrixNumber1">
@@ -103,5 +123,6 @@
   </body>
   <script src="./js/bootstrap.min.js"></script>
   <script src="./js/jquery-3.6.0.min.js"></script>
+  <script src="./js/db.js"></script>
   <script src="./js/custom.js"></script>
 </html>

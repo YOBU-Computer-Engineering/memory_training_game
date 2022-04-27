@@ -66,9 +66,6 @@ $(document).ready(function () {
   let prev = ""
 
   let counter = 0;
-
-  var start = new Date;
-
   $(this).click(function (e) {
     $('#counter').append(counter);
     let kartResimElement = $("#" + e.target.id).find("img"); //ilgili kartın ilgili resmin elementi(div)

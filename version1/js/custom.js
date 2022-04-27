@@ -1,4 +1,34 @@
 $(document).ready(function () {
+  let user = "";
+  let allUsers = "";
+  
+  db.get("allUsers")
+    .then(function (doc) {
+      allUsers = doc;
+
+    })
+    .catch(function (err) {
+      return err;
+    });
+
+
+  db.get("lastUser")
+    .then(function (doc) {
+      user = doc;
+    })
+    .catch(function (err) {
+      return err;
+    });
+  console.log(user);
+  setTimeout(() => {
+    console.log(user);
+    console.log(allUsers);
+
+    $("#username").append(
+      "Username: " + user.username + " last score: " + user.score
+    );
+  }, 1000);
+
   $("#test").attr("src", `http://127.0.0.1:5500/images/armut.png`);
   $("#divi").append("<p>Hello World</p>");
 
@@ -92,7 +122,7 @@ $(document).ready(function () {
 
       tableMatrixNumberDivImage.attr(
         "src",
-        `http://127.0.0.1:5500/images/${imageName[i]}.png`
+        `http://127.0.0.1:5500/version1/images/${imageName[i]}.png`
       );
       tableMatrixNumberDivImage.attr("alt", imageName[i]);
       tableMatrixNumberDivImage.attr("id", imageName[i]);
@@ -109,13 +139,13 @@ $(document).ready(function () {
   let prevImageObject = "";
   let doubleClick = false;
   let prev = "";
+  let score = 0;
+
+  let correctlyClicked = 0;
   $(this).click(function (e) {
     let thisImage = $("#" + e.target.id).find("img");
     let thisImageClass = thisImage.attr("class");
     let images = document.getElementsByClassName(thisImageClass);
-    // images[0].style.visibility = 'visible';
-    console.log(images[0]); //ilk
-    console.log(images[1]); //2.
 
     if (doubleClick == false) {
       prevImageObject = images[0];
@@ -124,20 +154,54 @@ $(document).ready(function () {
       doubleClick = true;
     } else {
       doubleClick = false;
+      let isSame = false;
       if (prevImageObject == images[0]) {
+        correctlyClicked += 1;
+        if (correctlyClicked == 6) {
+          db.get("lastUser")
+            .then(function (doc) {
+              doc.score = score;  
+              return db.put(doc);
+            })
+            .then(function () {
+              return db.get("lastUser");
+            })
+            .then(function (doc) {
+              console.log(doc);
+              alert(
+                "You won! Your Score: " +
+                  score +
+                  " --> PouchDB Inserted"
+              );
+            });
+        }
+        score += 10;
         images[0].style.visibility = "visible";
         images[1].style.visibility = "visible";
+        isSame = true;
       } else {
         thisImage.css("visibility", "visible");
         setTimeout(() => {
           thisImage.css("visibility", "hidden");
           prev.css("visibility", "hidden");
         }, 1000);
+        isSame = false;
       }
+      if (isSame) {
+        score += 10;
+        $("#score")
+          .contents()
+          .filter((_, el) => el.nodeType === 3)
+          .remove();
+        $("#score").append(score);
+      } else score -= 3;
+      $("#score")
+        .contents()
+        .filter((_, el) => el.nodeType === 3)
+        .remove();
+      $("#score").append(score);
     }
   });
 });
 
-function mesajGonder(deger) {
-  console.log(deger);
-}
+function mesajGonder(deger) {}
