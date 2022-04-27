@@ -1,17 +1,13 @@
 $(document).ready(function () {
   let user = "";
   let allUsers = "";
-  
   db.get("allUsers")
     .then(function (doc) {
       allUsers = doc;
-
     })
     .catch(function (err) {
       return err;
     });
-
-
   db.get("lastUser")
     .then(function (doc) {
       user = doc;
@@ -19,11 +15,7 @@ $(document).ready(function () {
     .catch(function (err) {
       return err;
     });
-  console.log(user);
   setTimeout(() => {
-    console.log(user);
-    console.log(allUsers);
-
     $("#username").append(
       "Username: " + user.username + " last score: " + user.score
     );
@@ -160,19 +152,14 @@ $(document).ready(function () {
         if (correctlyClicked == 6) {
           db.get("lastUser")
             .then(function (doc) {
-              doc.score = score;  
+              doc.score = score;
               return db.put(doc);
             })
             .then(function () {
               return db.get("lastUser");
             })
             .then(function (doc) {
-              console.log(doc);
-              alert(
-                "You won! Your Score: " +
-                  score +
-                  " --> PouchDB Inserted"
-              );
+              alert("You won! Your Score: " + score + " --> PouchDB Inserted");
             });
         }
         score += 10;

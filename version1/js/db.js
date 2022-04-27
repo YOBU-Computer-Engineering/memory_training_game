@@ -9,7 +9,7 @@ doc = {
   title: "Bozok Universitesiiii",
   lecture: " 🖤 Mobil Programlama Dersi!",
   teacher: "Tolga Hayıt",
-  date: "18.04.2021222",
+  date: "27 04 2022",
   version: "Version 1.0.0",
 };
 
